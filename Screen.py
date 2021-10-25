@@ -30,7 +30,11 @@ class Screen:
         pygame.display.flip()
         self.i_text = 10
 
+    def writeTextXY(self, text_to_write, coord_x, coord_y, color = color_white):
+        text = self.font.render(text_to_write, 1, color)
+        self.screen_surface.blit(text, (coord_x, coord_y))
+
     def writeText(self,text_to_write):
-        text = self.font.render(text_to_write,1 ,self.color_white)
+        text = self.font.render(text_to_write, 1, self.color_white)
         self.screen_surface.blit(text,(10,self.i_text))
         self.i_text = self.i_text + 30
