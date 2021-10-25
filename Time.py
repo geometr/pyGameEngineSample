@@ -36,6 +36,7 @@ class Time:
         self.days_in_year = set_days_in_year
         self.delta_times_of_day = self.hours_in_day/4
         self.updateTimingBegins()
+        self.calculateTimesOfDay()
 
     def updateTimingBegins(self):
         self.delta_day = -16 / self.days_in_year **2 * (self.current_day-self.days_in_year/2)**2 + 2
@@ -88,3 +89,8 @@ class Time:
     def eveningWorld(self):
         self.times_of_day="evening"
 
+    def notifyScreenRender(self, screen):
+        screen.writeText("Today " + str(self.current_day) +
+                         " day of " + str(self.current_year) +
+                         " year. Now " + str(self.current_hour) +
+                         " o'clock (" +self.times_of_day + ")." )

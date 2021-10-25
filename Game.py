@@ -1,53 +1,39 @@
 import World
+import pygame
+from pygame.locals import *
 
-def render():
-    print("Current world temp is", world.temperature.getTemperature())
-    print("Current time is",
-          world.time.current_year,"year",
-          world.time.current_day,"day",
-          world.time.current_hour,
-          "hour from world creating.")
+class Game:
+    FPS = 0
+    running = True
 
-    print("Now is", world.time.times_of_day)
+    def __init__(self):
+        self.world = World.World()
+        self.clock = pygame.time.Clock()
+        self.mainLoop()
 
-def update():
-    world.tick()
+    def mainLoop(self):
+        while self.running:
+            self.make_step = False
+            self.inputPlayer()
+            if self.make_step:
+                self.update()
+            self.render()
+            self.clock.tick(self.FPS)
 
-def printHelp():
-    print("Welcome to world simulate!")
-    print("Enter 'd' to skip 24 hours")
-    print("Enter 'm' to skip 1 month")
-    print("Enter 'y' to skip 1 year")
-    print("Enter 'v' to skip 1 century")
-    print("Enter 'h' to print this help")
-    print("Enter 'q' to quit simulation")
+    def render(self):
+        self.world.render(self.clock)
 
-def inputPlayer():
-    global skipsteps
-    if skipsteps==1:
-        key=input()
-        if key=="q":
-            quit()
-        if key=="d":
-            skipsteps=23
-        if key=="m":
-            skipsteps=world.time.getStepsInYear()/12
-        if key=="y":
-            skipsteps=world.time.getStepsInYear()
-        if key=="v":
-            skipsteps=world.time.getStepsInCentury()
-        if key=="h":
-            printHelp()
-    else:
-        skipsteps=skipsteps-1
+    def update(self):
+        self.world.tick()
 
-world=World.World()
-mainloop=1
-skipsteps=1
+    def inputPlayer(self):
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                pygame.quit()
+            elif event.type == pygame.KEYDOWN:
+                if event.key == pygame.K_q:
+                    self.running = False
+                if event.key == pygame.K_n:
+                    self.make_step = True
 
-printHelp()
-
-while mainloop:
-    inputPlayer()
-    update()
-    render()
+game = Game()

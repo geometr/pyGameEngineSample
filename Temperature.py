@@ -26,7 +26,6 @@ class Temperature:
         self.setupLocalTemperature()
 
     def calculateGlobalTemperatureSpring(self, current_day, days_in_year):
-        print(current_day/ days_in_year*2*self.maximal_delta-self.half_maximal_delta)
         self.global_temperature = current_day / days_in_year * 2 * self.maximal_delta - self.half_maximal_delta
 
     def calculateGlobalTemperatureAutumn(self, current_day, days_in_year):
@@ -47,3 +46,6 @@ class Temperature:
 
     def getTemperature(self):
         return self.local_temperature
+
+    def notifyScreenRender(self,screen):
+        screen.writeText("Temperature " + str(int(self.local_temperature)) + "C")
