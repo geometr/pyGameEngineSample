@@ -3,7 +3,7 @@ import pygame
 from pygame.locals import *
 
 class Game:
-    FPS = 0
+    FPS = 60
     running = True
 
     def __init__(self):
