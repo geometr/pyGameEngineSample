@@ -63,10 +63,9 @@ class RegionSprites:
             self.day[type] = sprite.copy()
             self.night[type] = sprite.copy()
             self.evening[type] = sprite.copy()
-            if type != self.LAVA or type != self.TREE:
+            if (type != self.LAVA):
                 self.morning[type].blit(self.morning_filter[type], (0,0), None, pygame.BLEND_RGBA_SUB)
                 self.evening[type].blit(self.evening_filter[type], (0,0), None, pygame.BLEND_RGBA_SUB)
                 self.night[type].blit(self.night_filter[type], (0,0), None, pygame.BLEND_RGBA_SUB)
-                if type !=self.TREE:
-                    self.day[type].blit(self.day_filter[type], (0,0), None, pygame.BLEND_RGBA_SUB)
+                self.day[type].blit(self.day_filter[type], (0,0), None, pygame.BLEND_RGBA_SUB)
 
