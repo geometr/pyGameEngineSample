@@ -10,6 +10,7 @@ class RegionSprites:
     SHAVAR_ALDAN = 1001
     SHAVAR_GOO = 1002
     TREE = 1003
+    OLD_TREE = 1004
     def __init__(self):
         self.sprites = dict()
         self.night = dict()
@@ -41,6 +42,11 @@ class RegionSprites:
 
         self.sprites[self.TREE] = pygame.image.load('../assets/tile_tree.png').convert_alpha()
         self.sizes[self.TREE] = (20,30)
+
+        self.sprites[self.OLD_TREE] = pygame.image.load('../assets/tile_old_tree.png').convert_alpha()
+        self.sizes[self.OLD_TREE] = (20,30)
+
+
 
         self.prepareSprites()
         for type,sprite in self.night.items():

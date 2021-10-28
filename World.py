@@ -19,8 +19,7 @@ class World:
                                                 (600,300,4,2),
                                     (0,200,1,0),
                                         (200,300,2,0),
-                                            (400,400,4,2)
-                        ):
+                                            (400,400,4,2)):
             self.regions.add(self.createRegion(x,y,biom,min_biom))
         self.screen.attach(self.temperature)
         self.screen.attach(self.time)

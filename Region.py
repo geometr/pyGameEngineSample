@@ -22,12 +22,16 @@ class Region:
                 self.level_map.append(random.randrange(0 + self.min_biom,self.max_biom))
                 j =j + 1
             i = i + 1
-        if self.min_biom == 1 and self.max_biom == 2:
+        if (self.min_biom == 1 and self.max_biom < 4):
             t = 0
             while t < 10:
                 x = random.randrange(0,self.region_size)
                 y = random.randrange(0,self.region_size)
-                self.level_map[int(x + y * self.region_size)] = self.sprites.TREE
+                if (self.max_biom < 3):
+                    tree = self.sprites.TREE
+                else:
+                    tree = self.sprites.OLD_TREE
+                self.level_map[int(x + y * self.region_size)] = tree
                 t = t + 1
             self.level_map[int(self.region_size/2 + self.region_size * ( self.region_size /2 -1))]=self.sprites.SHAVAR_ALDAN
 
