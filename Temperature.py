@@ -1,4 +1,5 @@
 import random
+import pygame
 
 class Temperature:
     local_temperature = 0
@@ -8,15 +9,19 @@ class Temperature:
 
     def notifyTimesChanged(self, *argv):
         self.updateLocalTemperature(*argv)
+        self.need_update = True
 
     def notifyDayChanged(self, *argv):
         self.calculateGlobalTemperature(*argv)
+        self.need_update = True
 
     def __init__(self, set_maximal_delta = 20):
         self.maximal_delta = set_maximal_delta
         self.half_maxmial_delta = self.maximal_delta / 2
         self.global_temperature = -self.half_maximal_delta
         self.setupLocalTemperature()
+        self.need_update = True
+        self.old_rect = pygame.Rect(0,0,0,0)
 
     def calculateGlobalTemperature(self, current_day, days_in_year):
         if current_day < days_in_year / 2:
@@ -47,5 +52,11 @@ class Temperature:
     def getTemperature(self):
         return self.local_temperature
 
+    def notifyNeedToRender(self,screen,rects):
+        if self.need_update:
+            rects.append(self.old_rect)
+            self.old_rect = screen.writeTextRect("Temperature " + str(int(self.local_temperature)) + "C",self.old_rect)
+            self.need_update = False
+            rects.append(self.old_rect)
     def notifyScreenRender(self,screen):
         screen.writeText("Temperature " + str(int(self.local_temperature)) + "C")

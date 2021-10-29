@@ -1,4 +1,5 @@
 import Temperature
+import pygame
 
 class Time:
     hours_in_day = 24
@@ -37,6 +38,8 @@ class Time:
         self.delta_times_of_day = self.hours_in_day/4
         self.updateTimingBegins()
         self.calculateTimesOfDay()
+        self.need_update = True
+        self.old_rect = pygame.Rect(0,0,0,0)
 
     def updateTimingBegins(self):
         self.delta_day = -16 / self.days_in_year **2 * (self.current_day-self.days_in_year/2)**2 + 2
@@ -63,6 +66,7 @@ class Time:
             self.current_day = 0
             self.current_year = self.current_year + 1
         self.calculateTimesOfDay()
+        self.need_update = True
 
     def calculateTimesOfDay(self):
         if (self.current_hour<self.morning_begins):
@@ -89,6 +93,15 @@ class Time:
     def eveningWorld(self):
         self.times_of_day="evening"
 
+    def notifyNeedToRender(self, screen, rects):
+        if self.need_update :
+            rects.append(self.old_rect)
+            self.old_rect = screen.writeTextRect("Today " + str(self.current_day) +
+                         " day of " + str(self.current_year) +
+                         " year. Now " + str(self.current_hour) +
+                         " o'clock (" +self.times_of_day + ").",self.old_rect )
+            rects.append(self.old_rect)
+            self.need_update = False
     def notifyScreenRender(self, screen):
         screen.writeText("Today " + str(self.current_day) +
                          " day of " + str(self.current_year) +

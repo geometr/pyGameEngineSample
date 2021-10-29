@@ -3,19 +3,19 @@ import pygame
 from pygame.locals import *
 
 class Game:
-    FPS = 60
+    FPS = 0
     running = True
-
+    make_step = -1
     def __init__(self):
         self.world = World.World()
         self.clock = pygame.time.Clock()
         self.mainLoop()
+        self.make_step = -1
 
     def mainLoop(self):
         while self.running:
-            self.make_step = False
             self.inputPlayer()
-            if self.make_step:
+            if self.make_step > 0:
                 self.update()
             self.render()
             self.clock.tick(self.FPS)
@@ -34,6 +34,9 @@ class Game:
                 if event.key == pygame.K_q:
                     self.running = False
                 if event.key == pygame.K_n:
-                    self.make_step = True
-
+                    self.make_step = -self.make_step
+                if event.key == pygame.K_d:
+                    self.world.screen.debug = -self.world.screen.debug
+                    self.world.screen.fullscreen_render= True
+                    self.render()
 game = Game()
