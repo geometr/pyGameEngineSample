@@ -1,24 +1,33 @@
+import Menu
+
 import World
+
 import pygame
-from pygame.locals import *
+
 
 class Game:
-    FPS = 0
-    running = True
-    make_step = -1
     def __init__(self):
+
+        self.main_menu = Menu.Menu()
+        self.stage = self.main_menu.mainLoop()
+
+        self.FPS = 0
+        self.running = True
         self.world = World.World()
         self.clock = pygame.time.Clock()
-        self.mainLoop()
         self.make_step = -1
+        self.mainLoop()
 
     def mainLoop(self):
-        while self.running:
-            self.inputPlayer()
-            if self.make_step > 0:
-                self.update()
-            self.render()
-            self.clock.tick(self.FPS)
+        if self.stage == "NEW_GAME":
+            while self.running:
+                self.inputPlayer()
+                if self.make_step > 0:
+                    self.update()
+                self.render()
+                self.clock.tick(self.FPS)
+        elif self.stage == "EXIT_GAME":
+            pygame.quit()
 
     def render(self):
         self.world.render(self.clock)
@@ -37,6 +46,8 @@ class Game:
                     self.make_step = -self.make_step
                 if event.key == pygame.K_d:
                     self.world.screen.debug = -self.world.screen.debug
-                    self.world.screen.fullscreen_render= True
+                    self.world.screen.fullscreen_render = True
                     self.render()
+
+
 game = Game()
