@@ -1,7 +1,20 @@
+'''
+Модуль загрузки спрайтов для региона
+'''
+# pylint: disable=no-member
+# pylint: disable=too-many-instance-attributes,too-few-public-methods
 import pygame
+'''
+TODO: Выделить сабкласс спрайт
+TODO: убрать pylint: disable=too-many-instance-attributes,
+too-few-public-methods
+'''
 
 
 class RegionSprites:
+    '''
+    Класс содержит все спрайты для региона
+    '''
     TERRAIN = 1
     WATER = 0
     DESERT = 2
@@ -14,17 +27,17 @@ class RegionSprites:
     OLD_TREE = 1004
 
     def __init__(self):
-        self.sprites = dict()
-        self.night = dict()
-        self.day = dict()
-        self.morning = dict()
-        self.evening = dict()
-        self.times = dict()
-        self.sizes = dict()
-        self.night_filter = dict()
-        self.day_filter = dict()
-        self.morning_filter = dict()
-        self.evening_filter = dict()
+        self.sprites = {}
+        self.night = {}
+        self.day = {}
+        self.morning = {}
+        self.evening = {}
+        self.times = {}
+        self.sizes = {}
+        self.night_filter = {}
+        self.day_filter = {}
+        self.morning_filter = {}
+        self.evening_filter = {}
 
         self.sprites[self.TERRAIN] = pygame.image.load(
             '../assets/tile_grass.png').convert_alpha()
@@ -57,48 +70,51 @@ class RegionSprites:
             '../assets/tile_old_tree.png').convert_alpha()
         self.sizes[self.OLD_TREE] = (20, 30)
 
-        self.prepareSprites()
-        for type, sprite in self.night.items():
-            self.times[type] = sprite
+        self.prepare_sprites()
+        for sprite_id, sprite in self.night.items():
+            self.times[sprite_id] = sprite
 
-    def prepareSprites(self):
-        for type, (width, height) in self.sizes.items():
-            self.night_filter[type] = pygame.Surface(
+    def prepare_sprites(self):
+        '''
+        Создаёт спрайты с окраской по времени
+        '''
+        for sprite_id, (width, height) in self.sizes.items():
+            self.night_filter[sprite_id] = pygame.Surface(
                 (width, height)).convert_alpha()
-            self.night_filter[type].fill((148, 148, 128, 0))
-            self.day_filter[type] = pygame.Surface(
+            self.night_filter[sprite_id].fill((148, 148, 128, 0))
+            self.day_filter[sprite_id] = pygame.Surface(
                 (width, height)).convert_alpha()
-            self.day_filter[type].fill((16, 0, 16, 0))
-            self.morning_filter[type] = pygame.Surface(
+            self.day_filter[sprite_id].fill((16, 0, 16, 0))
+            self.morning_filter[sprite_id] = pygame.Surface(
                 (width, height)).convert_alpha()
-            self.morning_filter[type].fill((64, 32, 32, 0))
-            self.evening_filter[type] = pygame.Surface(
+            self.morning_filter[sprite_id].fill((64, 32, 32, 0))
+            self.evening_filter[sprite_id] = pygame.Surface(
                 (width, height)).convert_alpha()
-            self.evening_filter[type].fill((32, 64, 64, 0))
+            self.evening_filter[sprite_id].fill((32, 64, 64, 0))
 
-        for type, sprite in self.sprites.items():
-            self.morning[type] = sprite.copy()
-            self.day[type] = sprite.copy()
-            self.night[type] = sprite.copy()
-            self.evening[type] = sprite.copy()
-            if (type != self.LAVA):
-                self.morning[type].blit(
-                    self.morning_filter[type],
+        for sprite_id, sprite in self.sprites.items():
+            self.morning[sprite_id] = sprite.copy()
+            self.day[sprite_id] = sprite.copy()
+            self.night[sprite_id] = sprite.copy()
+            self.evening[sprite_id] = sprite.copy()
+            if sprite_id != self.LAVA:
+                self.morning[sprite_id].blit(
+                    self.morning_filter[sprite_id],
                     (0, 0),
                     None,
                     pygame.BLEND_RGBA_SUB)
-                self.evening[type].blit(
-                    self.evening_filter[type],
+                self.evening[sprite_id].blit(
+                    self.evening_filter[sprite_id],
                     (0, 0),
                     None,
                     pygame.BLEND_RGBA_SUB)
-                self.night[type].blit(
-                    self.night_filter[type],
+                self.night[sprite_id].blit(
+                    self.night_filter[sprite_id],
                     (0, 0),
                     None,
                     pygame.BLEND_RGBA_SUB)
-                self.day[type].blit(
-                    self.day_filter[type],
+                self.day[sprite_id].blit(
+                    self.day_filter[sprite_id],
                     (0, 0),
                     None,
                     pygame.BLEND_RGBA_SUB)

@@ -1,67 +1,98 @@
-import Screen
-
+'''
+Главное меню
+'''
+# pylint: disable=no-member
 import pygame
+
+import screen
 
 
 class Menu:
-
+    '''
+    Главное меню используется в классе игры.
+    После создания объекта для вызова меню
+    следует использовать вызов main_loop(),
+    который вернёт выбранный пункт в виде
+    предопределённых строковых кодов
+    '''
     def __init__(self):
-        self.FPS = 0
+        self.fps = 0
         self.cursor_position = 0
-        self.screen = Screen.Screen()
+        self.screen = screen.Screen()
         self.clock = pygame.time.Clock()
         self.screen.attach(self)
         self.stage = "MAIN_MENU"
 
-    def notifyScreenRender(self, screen):
+    def notify_screen_render(self, surface):
+        '''
+        Пришло событие перерисовки экрана.
+        Рисуем все объекты
+        '''
         if self.cursor_position == 0:
-            self.screen.writeText("> Start new game <")
+            surface.write_text("> Start new game <")
         else:
-            self.screen.writeText("  Start new game")
+            surface.write_text("  Start new game")
         if self.cursor_position == 1:
-            self.screen.writeText("> Exit game <")
+            surface.write_text("> Exit game <")
         else:
-            self.screen.writeText("  Exit game  ")
+            surface.write_text("  Exit game  ")
 
-    def notifyNeedToRender(self, screen, rects):
-        pass
+    def notify_need_to_render(self, surface, rects):
+        '''
+        Пришло событие частичной перерисовки
+        Рисуем изменения на экране и заносим координаты
+        в rects
+        '''
 
-    def inputPlayer(self):
+    def input_player(self):
+        '''
+        Обрабатываем события и нажатия на клавиатуру
+        '''
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 pygame.quit()
             elif event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_j or event.key == pygame.K_DOWN:
-                    self.menuCursorPosition(1)
+                    self.menu_cursor_position(1)
                 if event.key == pygame.K_k or event.key == pygame.K_UP:
-                    self.menuCursorPosition(-1)
+                    self.menu_cursor_position(-1)
                 if event.key == pygame.K_RETURN:
-                    self.menuActivate()
+                    self.menu_activate()
                 if event.key == pygame.K_d:
-                    self.world.screen.debug = -self.world.screen.debug
-                    self.world.screen.fullscreen_render = True
+                    self.screen.debug = -self.screen.debug
+                    self.screen.fullscreen_render = True
                     self.render()
 
     def render(self):
+        '''
+        Запуск отрисовки экрана
+        '''
         self.screen.render(self.clock)
 
-    def menuCursorPosition(self, delta):
+    def menu_cursor_position(self, delta):
+        '''
+        Проверка положения курсора выбора пункта меню
+        '''
         self.cursor_position = self.cursor_position + delta
-        if self.cursor_position < 0:
-            self.cursor_position = 0
-        if self.cursor_position > 1:
-            self.cursor_position = 1
+        self.cursor_position = max(self.cursor_position, 0)
+        self.cursor_position = min(self.cursor_position, 1)
         self.screen.fullscreen_render = True
 
-    def menuActivate(self):
+    def menu_activate(self):
+        '''
+        Выбор пункта меню
+        '''
         if self.cursor_position == 0:
             self.stage = "NEW_GAME"
         if self.cursor_position == 1:
             self.stage = "EXIT_GAME"
 
-    def mainLoop(self):
+    def main_loop(self):
+        '''
+        Главный цикл и точка входа
+        '''
         while self.stage == "MAIN_MENU":
-            self.inputPlayer()
+            self.input_player()
             self.render()
-            self.clock.tick(self.FPS)
+            self.clock.tick(self.fps)
         return self.stage

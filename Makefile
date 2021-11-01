@@ -1,5 +1,5 @@
 run: check
-	python Game.py
+	python game.py
 
 check:
 	flake8 .

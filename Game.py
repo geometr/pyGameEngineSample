@@ -1,41 +1,52 @@
-import Menu
+'''
+Главный модуль игры
+'''
+# pylint: disable=wrong-import-order,no-member
+import sys
 
-import World
+import menu
 
 import pygame
 
+import world
+
 
 class Game:
+    ''' Основной класс игры '''
     def __init__(self):
 
-        self.main_menu = Menu.Menu()
-        self.stage = self.main_menu.mainLoop()
-
-        self.FPS = 0
+        self.fps = 0
         self.running = True
-        self.world = World.World()
+        self.world = world.World()
         self.clock = pygame.time.Clock()
         self.make_step = -1
-        self.mainLoop()
+        self.main_menu = menu.Menu()
+        self.stage = self.main_menu.main_loop()
+        self.main_loop()
 
-    def mainLoop(self):
+    def main_loop(self):
+        ''' Главный цикл игры '''
         if self.stage == "NEW_GAME":
             while self.running:
-                self.inputPlayer()
+                self.input_player()
                 if self.make_step > 0:
                     self.update()
                 self.render()
-                self.clock.tick(self.FPS)
+                self.clock.tick(self.fps)
         elif self.stage == "EXIT_GAME":
             pygame.quit()
+            sys.exit()
 
     def render(self):
+        ''' Рендер игры на экран '''
         self.world.render(self.clock)
 
     def update(self):
+        ''' Обсчёт такта игры '''
         self.world.tick()
 
-    def inputPlayer(self):
+    def input_player(self):
+        ''' Опрос клавиатуры '''
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 pygame.quit()
