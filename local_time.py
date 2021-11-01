@@ -24,7 +24,6 @@ class Time:
 
     delta_times_of_day = 0.0
     delta_day = 0.0
-    _observers = set()
 
     def attach(self, observer):
         '''
@@ -53,6 +52,7 @@ class Time:
             observer.notify_hour_changed(*args)
 
     def __init__(self, set_hours_in_day=24, set_days_in_year=360):
+        self._observers = set()
         self.hours_in_day = set_hours_in_day
         self.days_in_year = set_days_in_year
         self.delta_times_of_day = self.hours_in_day/4

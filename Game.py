@@ -48,9 +48,7 @@ class Game:
     def input_player(self):
         ''' Опрос клавиатуры '''
         for event in pygame.event.get():
-            if event.type == pygame.QUIT:
-                pygame.quit()
-            elif event.type == pygame.KEYDOWN:
+            if event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_q:
                     self.running = False
                 if event.key == pygame.K_n:

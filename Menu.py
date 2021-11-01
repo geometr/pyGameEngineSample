@@ -1,7 +1,7 @@
 '''
 Главное меню
 '''
-# pylint: disable=no-member
+# pylint: disable=no-member,wrong-import-order
 import pygame
 
 import screen
@@ -49,12 +49,10 @@ class Menu:
         Обрабатываем события и нажатия на клавиатуру
         '''
         for event in pygame.event.get():
-            if event.type == pygame.QUIT:
-                pygame.quit()
-            elif event.type == pygame.KEYDOWN:
-                if event.key == pygame.K_j or event.key == pygame.K_DOWN:
+            if event.type == pygame.KEYDOWN:
+                if event.key in (pygame.K_j, pygame.K_DOWN):
                     self.menu_cursor_position(1)
-                if event.key == pygame.K_k or event.key == pygame.K_UP:
+                if event.key in (pygame.K_k, pygame.K_UP):
                     self.menu_cursor_position(-1)
                 if event.key == pygame.K_RETURN:
                     self.menu_activate()

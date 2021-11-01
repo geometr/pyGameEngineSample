@@ -4,11 +4,6 @@
 # pylint: disable=no-member
 # pylint: disable=too-many-instance-attributes,too-few-public-methods
 import pygame
-'''
-TODO: Выделить сабкласс спрайт
-TODO: убрать pylint: disable=too-many-instance-attributes,
-too-few-public-methods
-'''
 
 
 class RegionSprites:
