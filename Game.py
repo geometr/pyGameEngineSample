@@ -15,7 +15,7 @@ class Game:
     ''' Основной класс игры '''
     def __init__(self):
 
-        self.fps = 0
+        self.fps = 60
         self.running = True
         self.world = world.World()
         self.clock = pygame.time.Clock()

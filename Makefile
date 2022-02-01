@@ -1,15 +1,16 @@
-run: check
+run:
 	python game.py
+test: clean check coverage
 
-check:
+check: 
 	flake8 *.py
 	pylint *.py
 	mypy *.py
 
-test:
-	flake8 *.py | less
-	pylint *.py | less
-	mypy *.py | less
-
 clean:
 	rm -rf __pycache__
+
+coverage:
+	coverage erase
+	coverage run -m pytest -ra
+	coverage report -m  

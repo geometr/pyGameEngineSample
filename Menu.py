@@ -16,7 +16,7 @@ class Menu:
     предопределённых строковых кодов
     '''
     def __init__(self):
-        self.fps = 0
+        self.fps = 60
         self.cursor_position = 0
         self.screen = screen.Screen()
         self.clock = pygame.time.Clock()

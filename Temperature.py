@@ -51,7 +51,7 @@ class Temperature:
         '''
         Температура в весеннем цикле (рост)
         '''
-        self.global_temperature = -self.half_maximal_delta + (
+        self.global_temperature = self.half_maximal_delta - (
             current_day / days_in_year * 2 * self.maximal_delta
         )
 
@@ -59,7 +59,7 @@ class Temperature:
         '''
         Температура в осеннем цикле (падение)
         '''
-        self.global_temperature = self.half_maximal_delta - (
+        self.global_temperature = -self.half_maximal_delta + (
             current_day * 2 / days_in_year * self.maximal_delta)
 
     def random_diff_local_temperature(self):
