@@ -3,8 +3,7 @@
 '''
 import random
 
-import pygame
-
+import temperature_render
 
 class Temperature:
     '''
@@ -30,12 +29,12 @@ class Temperature:
         self.need_update = True
 
     def __init__(self, set_maximal_delta=20):
+        self.temperature_render = temperature_render.Temperature_render()
         self.maximal_delta = set_maximal_delta
         self.half_maxmial_delta = self.maximal_delta / 2
         self.global_temperature = -self.half_maximal_delta
         self.random_diff_local_temperature()
         self.need_update = True
-        self.old_rect = pygame.Rect(0, 0, 0, 0)
 
     def calculate_global_temperature(self, current_day, days_in_year):
         '''
@@ -71,7 +70,7 @@ class Temperature:
 
     def times_delta_temperature(self, times):
         '''
-        температура в зависимости от времени суток
+        Изменение температуры в зависимости от времени суток
         '''
         if times == "night":
             self.local_temperature = self.local_temperature - 1
@@ -92,16 +91,14 @@ class Temperature:
         '''
         Событие частичной отрисовки
         '''
+        
         if self.need_update:
-            rects.append(self.old_rect)
-            self.old_rect = screen.write_text_rect("Temperature " + str(
-                int(self.local_temperature)) + "C", self.old_rect)
+            self.temperature_render.notify_need_to_render(self.local_temperature, screen, rects)
             self.need_update = False
-            rects.append(self.old_rect)
 
     def notify_screen_render(self, screen):
         '''
         Событие полная отрисовка
         '''
-        screen.write_text(
-            "Temperature " + str(int(self.local_temperature)) + "C")
+        self.temperature_render.notify_screen_render(self.local_temperature, screen)
+        
