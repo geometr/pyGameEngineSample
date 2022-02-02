@@ -4,6 +4,7 @@
 # pylint: disable=too-many-instance-attributes
 import pygame
 
+import local_time_render
 
 class Time:
     '''
@@ -58,8 +59,8 @@ class Time:
         self.delta_times_of_day = self.hours_in_day/4
         self.update_timing_begins()
         self.calculate_times_of_day()
+        self.render = local_time_render.Time_render()
         self.need_update = True
-        self.old_rect = pygame.Rect(0, 0, 0, 0)
 
     def update_timing_begins(self):
         '''
@@ -148,24 +149,11 @@ class Time:
         Отрисовка части экрана
         '''
         if self.need_update:
-            rects.append(self.old_rect)
-            self.old_rect = screen.write_text_rect("Today " +
-                                                   str(self.current_day) +
-                                                   " day of " +
-                                                   str(self.current_year) +
-                                                   " year. Now " +
-                                                   str(self.current_hour) +
-                                                   " o'clock (" +
-                                                   self.times_of_day +
-                                                   ").", self.old_rect)
-            rects.append(self.old_rect)
+            self.render.notify_need_to_render(screen, rects, self.times_of_day, self.current_hour, self.current_day, self.current_year)
             self.need_update = False
 
     def notify_screen_render(self, screen):
         '''
         Отрисовка всего экрана
         '''
-        screen.write_text("Today " + str(self.current_day) +
-                          " day of " + str(self.current_year) +
-                          " year. Now " + str(self.current_hour) +
-                          " o'clock (" + self.times_of_day + ").")
+        self.render.notify_screen_render(screen, self.times_of_day, self.current_hour, self.current_day, self.current_year)
