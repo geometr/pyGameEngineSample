@@ -8,15 +8,21 @@ class Abstract_render:
         self.old_rect = pygame.Rect(0, 0, 0, 0)
 
     def notify_need_to_render(self, args):
-        self.before_render(args['rects'])
+        self.__before_render(args['rects'])
         self.need_to_render(args)
-        self.after_render(args['rects'])
+        self.__after_render(args['rects'])
 
-    def before_render(self, rects):
+    def __before_render(self, rects):
         rects.append(self.old_rect)
 
-    def after_render(self, rects):
+    def __after_render(self, rects):
         rects.append(self.old_rect)
 
     def need_to_render(self, args):
+        pass
+
+    def notify_screen_render(self, args):
+        self.screen_render(args)
+
+    def screen_render(self, args):
         pass
