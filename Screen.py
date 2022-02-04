@@ -48,6 +48,7 @@ class Screen:
         self.debug = -1
         self.old_rects = pygame.Rect(0, 0, 0, 0)
         screen_surface_flags = pygame.FULLSCREEN | pygame.DOUBLEBUF
+        screen_surface_flags = pygame.DOUBLEBUF
         self.screen_surface = pygame.display.set_mode(
             (800, 600),
             screen_surface_flags)
