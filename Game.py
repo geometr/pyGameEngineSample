@@ -53,10 +53,15 @@ class Game:
                     self.running = False
                 if event.key == pygame.K_n:
                     self.make_step = -self.make_step
-                if event.key == pygame.K_d:
+                if event.key == pygame.K_p:
                     self.world.screen.debug = -self.world.screen.debug
                     self.world.screen.fullscreen_render = True
-                    self.render()
-
-
+                if event.key == pygame.K_d:
+                    self.world.player.move_right()
+                if event.key == pygame.K_a:
+                    self.world.player.move_left()
+                if event.key == pygame.K_w:
+                    self.world.player.move_up()
+                if event.key == pygame.K_s:
+                    self.world.player.move_down()
 game = Game()

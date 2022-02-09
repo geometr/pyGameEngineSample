@@ -30,4 +30,11 @@ class Player:
         screen.draw(self.sprites[self.BODY],self.x, self.y)
     def notify_screen_render(self, screen):
         screen.draw(self.sprites[self.BODY], self.x, self.y)
-
+    def move_left(self):
+        self.x = self.x - 1
+    def move_right(self):
+        self.x = self.x + 1
+    def move_up(self):
+        self.y = self.y - 1
+    def move_down(self):
+        self.y = self.y + 1
